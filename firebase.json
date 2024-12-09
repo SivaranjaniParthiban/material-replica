@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/angular-my-app",
+    "public": "build",
     "rewrites": [
       {
         "source": "**",
