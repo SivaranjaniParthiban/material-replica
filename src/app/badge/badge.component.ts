@@ -27,11 +27,10 @@ export class BadgeComponent {
   constructor(
     private matDialog: MatDialog // private store: Store<AppStateInterface>
   ) {
-
     window.localStorage.setItem('likes', '');
+    console.log(window.localStorage.getItem('likes') + 'LOcalDtorage');
+
     this.reduxCharacters = window.localStorage.getItem('likes');
-
-
 
     if (this.reduxCharacters !== '') {
       this.arraySplit = this.reduxCharacters.split(',');
@@ -48,12 +47,10 @@ export class BadgeComponent {
         });
         // element.isClicked='false'
       });
-    }
-    else {
+    } else {
       this.matbadgeLikes = 0;
-      console.log("Badge muttai")
+      console.log('Badge muttai');
     }
-
   }
 
   likesAdd(i: number) {
@@ -108,10 +105,7 @@ export class BadgeComponent {
 
       // })
       console.log(this.characterName);
-      this.arraySplit.splice(
-        this.arraySplit.indexOf(this.characterName),
-        1
-      );
+      this.arraySplit.splice(this.arraySplit.indexOf(this.characterName), 1);
       console.log(this.arraySplit);
       localStorage.setItem('likes', this.arraySplit.toString());
     }
