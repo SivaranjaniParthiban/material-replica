@@ -27,6 +27,8 @@ export class BadgeComponent {
   constructor(
     private matDialog: MatDialog // private store: Store<AppStateInterface>
   ) {
+
+    window.localStorage.setItem('likes', '');
     this.reduxCharacters = window.localStorage.getItem('likes');
 
 
