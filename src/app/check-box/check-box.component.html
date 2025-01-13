@@ -1,0 +1,22 @@
+
+
+<div class="container">
+<div class="watch-list">
+      <h4><strong>Watch List</strong></h4>
+      <mat-checkbox *ngFor="let item of animeList;let i=index" color="primary" (click)="addToWatchedList(i)">{{item.list}}</mat-checkbox>
+</div>
+
+<div class="send-to-watched-list">
+     <button mat-raised-button (click)="sendToWatchedAnimes()">Send To Watched Animes</button>
+</div>
+<div class="watched-anime">
+      <h4><strong>Watched Anime</strong></h4>
+<p *ngFor="let item of watchedAnimeList"><span>{{item}} </span></p>
+</div>
+
+
+
+</div>
+
+
+

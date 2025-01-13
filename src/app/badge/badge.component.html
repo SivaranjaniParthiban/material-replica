@@ -1,6 +1,42 @@
-<p>badge works!</p>
+<h2>Character Description</h2>
 
 
-<button mat-icon-button matTooltip="Notifications">
-      <mat-icon matBadge="22" matBadgePosition="above after">notifications</mat-icon>
+<button mat-icon-button matTooltip="Favourites" style="position:absolute;top:0;right:0"  (click)="openDialog()">
+      <mat-icon matBadge="{{matbadgeLikes}}" matBadgePosition="above after">favorite</mat-icon>
 </button>
+<!-- <button mat-icon-button matTooltip="Notifications" style="position:absolute;top:0;right:50px">
+      <mat-icon matBadge="{{matbadgeShares}}" matBadgePosition="above after">share</mat-icon>
+</button> -->
+
+<div style="display:flex;flex-direction: column; gap:100px">
+      <mat-card class="mat-elevation-z8" appearance="outlined" *ngFor="let character of characters;let i=index"
+            style="display:flex;flex-direction :row">
+            <mat-card-header>
+                  <div mat-card-avatar [style.background-image]=" 'url(' + character.icon + ') ' "
+                        style="background-size:cover"></div>
+                  <mat-card-title>{{character.name }}</mat-card-title>
+                  <mat-card-subtitle>{{character.anime}}</mat-card-subtitle>
+            </mat-card-header>
+            <img class="image" mat-card-image src="{{character.imgSrc}}" alt="404">
+            <mat-card-content>
+                  <p>
+                        {{character.details}}
+                  </p>
+            </mat-card-content>
+            <!-- <mat-card-actions>
+                  <button mat-button (click)="likesAdd(i)"><mat-icon color="warn"  *ngIf="{{character.isClicked}} ==='true' ">favorite</mat-icon>
+                        <mat-icon   *ngIf="{{character.isClicked}} ==='false' ">favorite</mat-icon>LIKE</button>
+                  <button mat-button (click)="sharesAdd(i)">SHARE</button>
+            </mat-card-actions> -->
+            <mat-card-actions>
+                  <button mat-button (click)="likesAdd(i)" disableRipple="true">
+
+                        <mat-icon color="warn" *ngIf="character.isClicked === 'true'" class="jump" >favorite</mat-icon>
+                        <mat-icon *ngIf="character.isClicked === 'false'">favorite</mat-icon>
+                        Like
+                  </button>
+
+            </mat-card-actions>
+
+      </mat-card>
+</div>

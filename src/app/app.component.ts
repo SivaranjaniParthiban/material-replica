@@ -9,7 +9,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -17,6 +16,8 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { GoogleAuthProvider } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/compat/app';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +44,10 @@ import * as firebase from 'firebase/compat/app';
 })
 export class AppComponent {
   title = 'Jarvis';
+  error: string | null = null;
+  loginForm!: FormGroup;
+
+  passwordHide = true;
   @ViewChild('drawer', { static: false }) drawer!: MatDrawer;
   @ViewChild('pageContent', { static: false }) pageContent!: ElementRef;
   user: Observable<firebase.default.User | null>;
@@ -51,16 +56,28 @@ export class AppComponent {
   expandedEvent = new EventEmitter<boolean>();
   hasBackdrop: boolean = false;
   provider = new GoogleAuthProvider();
+  submitted = false;
 
-  constructor(public fbAuth: AngularFireAuth) {
+  constructor(
+    public fbAuth: AngularFireAuth,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {
     this.expandedEvent.next(false);
     this.user = fbAuth.authState;
+
+   
     this.user.subscribe((res) => {
       this.userdetails = res;
     });
+
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+    this.error = null;
   }
   changedExpanded(changedExpanded: boolean) {
-    console.log(changedExpanded);
     this.expanded = changedExpanded;
     this.hasBackdrop = changedExpanded;
     this.expandedEvent.next(this.expanded);
@@ -72,53 +89,70 @@ export class AppComponent {
     this.expandedEvent.next(this.expanded);
   }
 
+
   ngAfterViewInit(): void {
     const pageContentEl = this.pageContent.nativeElement as HTMLElement;
-    pageContentEl.style.marginLeft = '50px';
+    pageContentEl.style.marginLeft = '75px';
     this.expandedEvent.next(false);
   }
-
-  // firebaseUiAuthConfig: firebaseui.auth.Config = {
-  //   signInFlow: 'popup',
-  //   signInOptions: [
-  //     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  //     {
-  //       scopes: ['public_profile', 'email', 'user_likes', 'user_friends'],
-  //       customParameters: {
-  //         auth_type: 'reauthenticate',
-  //       },
-  //       provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-  //     },
-  //     firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-  //     firebase.auth.GithubAuthProvider.PROVIDER_ID,
-  //     {
-  //       requireDisplayName: false,
-  //       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-  //     },
-  //     firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-  //     firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
-  //   ],
-  //   //term of service
-  //   tosUrl: '<your-tos-link>',
-  //   //privacy url
-  //   privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
-  //   //credentialHelper:             firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
-  //   credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-  // };
-
-  // constructor(
-  //   private angularFireDB: AngularFireDatabase,
-  //   public afAuth: AngularFireAuth
-  // ) {
-  //   this.user = afAuth.authState;
-  //   this.user.subscribe((res) => {
-  //     this.userdetails = res;
-  //   });
-  // }
 
   login() {
     this.fbAuth.signInWithPopup(new firebase.default.auth.GoogleAuthProvider());
   }
+  get f() {
+    return this.loginForm.controls;
+  }
 
+  showSnackbar(msg: string, action: string, duration?: number | null) {
+    this.snackBar.open(msg, action, {
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      duration: duration ? duration : undefined,
+      panelClass: ['snack'],
+    });
+  }
+  onSubmit() {
+    const username: string = this.f['username'].value;
+    const password: string = this.f['password'].value;
 
+    if (username == '' || password == '') {
+      this.error = 'Invalid Credentials';
+    }
+    return firebase.default
+      .auth()
+      .createUserWithEmailAndPassword(username, password)
+      .then((response) => {
+        this.loginForm.reset();
+        alert('Your account has been created!');
+      })
+      .catch((error) => {
+        this.error = error.error.responseMessage;
+        this.showSnackbar(error.message, 'OK', 2000);
+      });
+  }
+
+  onLogin() {
+    const username: string = this.f['username'].value;
+    const password: string = this.f['password'].value;
+    if (username == '' || password == '') {
+      this.error = 'Invalid Credentials';
+    }
+    return firebase.default
+      .auth()
+      .signInWithEmailAndPassword(username, password)
+      .then((response) => {
+        this.showSnackbar(
+          'Access Granted , Agent . Welcome To S.H.I.E.L.D  ',
+          '',
+          2000
+        );
+        this.loginForm.reset();
+      })
+      .catch((error) => {
+        this.error = error.error.responseMessage;
+        this.showSnackbar(error.message, 'OK', 2000);
+      });
+  }
 }
+
+

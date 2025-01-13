@@ -7,8 +7,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonToggleComponent {
-  // onclick(event: Event) {
-  //   console.log(event.target);
-  // }
 
 }

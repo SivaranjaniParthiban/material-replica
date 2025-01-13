@@ -25,8 +25,6 @@ export class ScrollTopComponent implements OnInit {
 
   scrollToTop() {
     this.smoothScrollTop();
-    console.log("duck");
-    
   }
 
   private smoothScrollTop() {

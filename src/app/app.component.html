@@ -25,20 +25,7 @@
 
 
 <ng-template #showLogin>
-
-  <body class="web">
-<div style="color:white">WELCOME YO !!!!</div>
-    <div class="login">
-      <h1 style="font-family:cursive">Sign Up With Google <mat-icon>google</mat-icon> </h1>
-      
-      <button mat-stroked-button (click)="login()" style="color:white;border: ridge;" class="signin">Sign UP</button>
-    </div>
-  </body>
-
-  <!-- <p style="background-color: black;">Please login.</p>
--->
-</ng-template>
-<!-- <div class="bird-container bird-container-one">
+  <!-- <div class="bird-container bird-container-one">
   <div class="bird bird-one"></div>
 </div>
 <div class="bird-container bird-container-two">
@@ -49,4 +36,60 @@
 </div>
 <div class="bird-container bird-container-four">
   <div class="bird bird-four"></div>
-</div> -->
+</div>  -->
+
+  <body class="web">
+    <div style="color:white" class="tops-left">Welcome Guardian ! Your Galaxy Awaits</div>
+    <div class="login">
+      <div style="padding-top:10px;text-align:center;padding-bottom: 10px;"> </div>
+
+      <div class="form-container">
+        <form [formGroup]="loginForm" (keyup.enter)="onSubmit()">
+          <div [ngClass]="[error ? 'shake' :'form-field' ]">
+            <mat-form-field appearance="fill" class="mat-custom-field">
+              <mat-label>E-Mail</mat-label>
+              <input matInput formControlName="username" required autocomplete="off">
+              <mat-icon matSuffix color="accent">person</mat-icon>
+              <mat-error *ngIf="f['username'].touched && f['username'].invalid">Username Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div [ngClass]="[error ? 'shake' :'form-field' ]">
+            <mat-form-field appearance="fill" class="mat-custom-field">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="passwordHide ? 'password' : 'text'" formControlName="password" required
+                autocomplete="off">
+              <mat-icon matSuffix color="accent">key</mat-icon>
+              <mat-error *ngIf="f['password'].touched && f['password'].invalid">Password Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+        <div class="form-field" style="padding: 5px 0;">
+          <!-- <button mat-raised-button class="reset-btn" color="warn" type="button" (click)="reset()"
+      [disabled]="!loginForm.touched">Reset</button>
+    <span style="margin: 0 5px;"></span> -->
+          <div style="display:flex;flex-direction:row">
+            <button mat-raised-button type="submit" (click)="onSubmit()" class="signin">Create Account</button>
+            <div style="padding:2px"></div>
+            <button mat-raised-button type="submit" (click)="onLogin()" class="signin">Log In</button>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div style="padding:20px;padding-left:150px">Or </div>
+      <button mat-raised-button (click)="login()" style="color:rgb(0, 0, 0);border: ridge;" class="signin">Sign In With
+        Google <img style="width:15px;height:15px; position: absolute;  bottom: 2px; right: -22px;"
+          src="assets/images.png" /></button>
+      <!-- <button mat-stroked-button (click)="signIn()" style="color:white;border: ridge;" class="signin">Already Have Account ? Login</button> -->
+    </div>
+    <div *ngIf="error && error != null" class="form-field" style="background-color: rgb(0, 0, 0)">
+      <mat-error style="color:white;display:flex;align-items: center;">{{error}}</mat-error>
+    </div>
+  </body>
+
+  <!-- <p style="background-color: black;">Please login.</p>
+-->
+</ng-template>

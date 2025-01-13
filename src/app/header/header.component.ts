@@ -15,7 +15,13 @@ export class HeaderComponent implements OnDestroy, AfterViewInit {
   rxTime = new Date();
   user: any;
   userdetails: any;
-
+  userMe: any = '';
+  constructor(fbAuth: AngularFireAuth) {
+    fbAuth.authState.subscribe((user) => {
+      console.log(user?.displayName);
+      this.userMe = user?.displayName;
+    });
+  }
 
   ngAfterViewInit(): void {
     this.expanded.subscribe((val) => {
@@ -47,6 +53,4 @@ export class HeaderComponent implements OnDestroy, AfterViewInit {
       this.changedExpanded.next(false);
     }
   }
-
-
 }

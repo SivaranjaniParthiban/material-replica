@@ -5,7 +5,7 @@
                   <mat-icon *ngIf="isExpanded" class="material-icons-round">menu_open</mat-icon>
             </button>
       </div>
-      <span class="welcome">WELCOME LEARNER
+      <span class="welcome" *ngIf="userMe" Else="LEARNER" >HI  {{userMe | uppercase}}
     
       </span>
 <img class="dragon" src="/assets/img/dragon.png" />

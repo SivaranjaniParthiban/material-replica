@@ -28,6 +28,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { ButtonComponent } from './button/button.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ButtonToggleComponent } from './button-toggle/button-toggle.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CardComponent } from './card/card.component';
@@ -36,7 +37,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-
+import { BadgeDialogComponent } from './badge-dialog/badge-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/app';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CheckBoxComponent } from './check-box/check-box.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatchipsComponent } from './matchips/matchips.component';
+import { MatChipsModule } from '@angular/material/chips';
 var config = {
   apiKey: 'AIzaSyDZDD3oXXVW66Sl_WBt_XfylF_0qDhuCzM',
   authDomain: 'tony-ee200.firebaseapp.com',
@@ -59,9 +67,13 @@ var config = {
     ButtonComponent,
     ButtonToggleComponent,
     CardComponent,
+    BadgeDialogComponent,
+    CheckBoxComponent,
+    MatchipsComponent,
   ],
   imports: [
     BrowserModule,
+    MatCheckboxModule,
     CommonModule,
     AppRoutingModule,
     MatButtonModule,
@@ -73,6 +85,7 @@ var config = {
     MatMenuModule,
     MatTooltipModule,
     MatSidenavModule,
+    MatSnackBarModule,
     MatListModule,
     MatExpansionModule,
     NgOptimizedImage,
@@ -86,9 +99,17 @@ var config = {
     MatButtonToggleModule,
     MatCardModule,
     MatDialogModule,
+    MatChipsModule,
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10,
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+      trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
+      traceLimit: 75, //
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent, CardComponent],

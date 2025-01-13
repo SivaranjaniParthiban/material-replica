@@ -1,7 +1,18 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-
+import {
+  NavigationEnd,
+  Event as NavigationEvent,
+  Router,
+  Scroll,
+} from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -13,17 +24,31 @@ export class MenuComponent implements AfterViewInit {
   isExpanded = false;
   user: any;
   userdetails: any;
-  constructor(private router: Router, public fbAuth: AngularFireAuth) {  this.user = fbAuth.authState;
-  this.user.subscribe((res: any) => {
-    this.userdetails = res;
-  });
-  
+  backgroundColor = 'White';
+  url: string = '';
+  event$!: Subscription;
+  constructor(private router: Router, public fbAuth: AngularFireAuth) {
+    this.user = fbAuth.authState;
+    this.user.subscribe((res: any) => {
+      this.userdetails = res;
+    });
+
+    // this.event$ = this.router.events.subscribe((event: NavigationEvent) => {
+    //   if (event instanceof Scroll) {
+    //     this.url = event.routerEvent.url;
+    //   }
+    // });
+    // const events = router.events.pipe(
+    //   filter((event: any) => event instanceof NavigationEnd)
+    // );
+    // events.subscribe((e: NavigationEnd) => {
+    //   this.url = e.urlAfterRedirects;
+    //   console.log(this.url);
+    // });
   }
 
-  
   collapseMenu() {
     this.isExpanded = false;
-    console.log(this.isExpanded);
     this.setChangeExpanded();
   }
 
@@ -43,9 +68,6 @@ export class MenuComponent implements AfterViewInit {
   }
 
   logout() {
-    console.log('Logout');
     this.fbAuth.signOut();
   }
 }
-
-
