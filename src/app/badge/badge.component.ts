@@ -27,7 +27,7 @@ export class BadgeComponent {
   constructor(
     private matDialog: MatDialog // private store: Store<AppStateInterface>
   ) {
-    this.reduxCharacters = localStorage.getItem('likes');
+    this.reduxCharacters = window.localStorage.getItem('likes');
 
 
 
@@ -72,7 +72,7 @@ export class BadgeComponent {
         // Local storage is supported
         console.log(this.addedCharacters.toString() + 'tring contents');
         localStorage.setItem('likes', this.arraySplit.toString());
-        const data = localStorage.getItem('likes');
+        const data = window.localStorage.getItem('likes');
         console.log(data + 'vjhgh'); // Output: value
       } else {
         // Local storage is not supported
@@ -117,12 +117,12 @@ export class BadgeComponent {
 
   openDialog() {
     console.log('Dialog opened!');
-    console.log(localStorage.getItem('likes'));
+    console.log(window.localStorage.getItem('likes'));
     // this.store.select(selectSelectedCharc)
     const dialogRef = this.matDialog.open(BadgeDialogComponent, {
       width: '450px',
       disableClose: false,
-      data: localStorage.getItem('likes'),
+      data: window.localStorage.getItem('likes'),
     });
     dialogRef.afterClosed().subscribe((data: any) => {
       console.log(data);
