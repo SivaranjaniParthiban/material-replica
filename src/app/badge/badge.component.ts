@@ -24,30 +24,60 @@ export class BadgeComponent {
   reduxCharacters: any;
   arraySplit = new Array();
 
+  // constructor(
+  //   private matDialog: MatDialog // private store: Store<AppStateInterface>
+  // ) {
+  //   // window.localStorage.setItem('likes', '');
+  //   console.log(window.localStorage.getItem('likes') + 'LocalStorage');
+
+  //   this.reduxCharacters = window.localStorage.getItem('likes');
+
+  //   if (this.reduxCharacters !== '') {
+  //     this.arraySplit = this.reduxCharacters.split(',');
+  //     this.matbadgeLikes = this.arraySplit.length;
+  //     console.log(this.arraySplit);
+  //     this.arraySplit.forEach((element) => {
+  //       console.log(element + 'character');
+  //       // element.isClicked = 'true';
+  //       this.characters.forEach((element2) => {
+  //         console.log(element2.name + 'arraysplit');
+  //         if (element == element2.name) {
+  //           element2.isClicked = 'true';
+  //         }
+  //       });
+  //       // element.isClicked='false'
+  //     });
+  //   } else {
+  //     this.matbadgeLikes = 0;
+  //     console.log('Badge muttai');
+  //   }
+  // }
+
   constructor(
     private matDialog: MatDialog // private store: Store<AppStateInterface>
   ) {
-    // window.localStorage.setItem('likes', '');
-    console.log(window.localStorage.getItem('likes') + 'LocalStorage');
+    const storedLikes = window.localStorage.getItem('likes');
 
-    this.reduxCharacters = window.localStorage.getItem('likes');
+    console.log(storedLikes + 'LocalStorage');
 
-    if (this.reduxCharacters !== '') {
+    if (storedLikes !== null) {
+      this.reduxCharacters = storedLikes;
       this.arraySplit = this.reduxCharacters.split(',');
       this.matbadgeLikes = this.arraySplit.length;
       console.log(this.arraySplit);
+
       this.arraySplit.forEach((element) => {
         console.log(element + 'character');
-        // element.isClicked = 'true';
         this.characters.forEach((element2) => {
           console.log(element2.name + 'arraysplit');
-          if (element == element2.name) {
+          if (element === element2.name) {
             element2.isClicked = 'true';
           }
         });
-        // element.isClicked='false'
       });
     } else {
+      this.reduxCharacters = '';
+      this.arraySplit = [];
       this.matbadgeLikes = 0;
       console.log('Badge muttai');
     }
