@@ -5,12 +5,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDrawer } from '@angular/material/sidenav';
 import { GoogleAuthProvider } from '@angular/fire/auth';
@@ -66,7 +61,6 @@ export class AppComponent {
     this.expandedEvent.next(false);
     this.user = fbAuth.authState;
 
-   
     this.user.subscribe((res) => {
       this.userdetails = res;
     });
@@ -88,7 +82,6 @@ export class AppComponent {
     this.hasBackdrop = false;
     this.expandedEvent.next(this.expanded);
   }
-
 
   ngAfterViewInit(): void {
     const pageContentEl = this.pageContent.nativeElement as HTMLElement;
@@ -154,5 +147,3 @@ export class AppComponent {
       });
   }
 }
-
-
