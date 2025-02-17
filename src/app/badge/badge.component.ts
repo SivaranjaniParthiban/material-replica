@@ -98,8 +98,8 @@ export class BadgeComponent {
       console.log(this.addedCharacters);
 
       if (typeof localStorage !== 'undefined') {
-        // Local storage is supported
-        console.log(this.addedCharacters.toString() + 'tring contents');
+        // Local storage is supported 
+        console.log(this.addedCharacters.toString() + 'string contents');
         localStorage.setItem('likes', this.arraySplit.toString());
         const data = window.localStorage.getItem('likes');
         console.log(data + 'vjhgh'); // Output: value
