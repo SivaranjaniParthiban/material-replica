@@ -108,10 +108,6 @@ export class AppComponent {
     const username: string = this.f['username'].value;
     const password: string = this.f['password'].value;
 
-    console.log('Merg🔥🔥');
-    console.log('Merg🔥🔥');
-    console.log('Merg🔥🔥');
-
     if (username == '' || password == '') {
       this.error = 'Invalid Credentials';
     }
