@@ -87,7 +87,7 @@ export class AppComponent {
     const pageContentEl = this.pageContent.nativeElement as HTMLElement;
     pageContentEl.style.marginLeft = '75px';
     this.expandedEvent.next(false);
-    console.log('EEEEEEEEEEEEEEEEE');
+    console.log('FFFFFFFFFFFFFFFFFFFFF');
   }
 
   login() {
